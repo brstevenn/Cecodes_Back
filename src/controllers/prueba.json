@@ -1,0 +1,746 @@
+[
+  {
+    "id": 1,
+    "empresa": "Nombre de la empresa",
+    "planta": "Nombre de la planta",
+    "ubicacion": "Ubicacion",
+    "año": "2023",
+    "Alcances": [
+      {
+        "nombre": "Alcance 3",
+        "meta": 20,
+        "Tipos": [
+          {
+            "nombre": "Residuos",
+            "SubTipos": [
+              {
+                "nombre": "Relleno Sanitario gestionado anaeróbico",
+                "SubTipoInferiors": []
+              },
+              {
+                "nombre": "Quema a cielo abierto controlada rural",
+                "SubTipoInferiors": []
+              },
+              {
+                "nombre": "Incineración",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Lodos residuos líquidos domésticos",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 16
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 16
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Lodos residuos líquidos industriales",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 17
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 17
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Actividad Agropecuaria",
+            "SubTipos": [
+              {
+                "nombre": "Alimentos (Kg)",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Carne res",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 14
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 14
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Carne cerdo",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 15
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 15
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Transporte (Km)",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Bus local",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 12
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 12
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Taxi",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 13
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 13
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Alcance 2",
+        "meta": 20,
+        "Tipos": [
+          {
+            "nombre": "Solar",
+            "SubTipos": []
+          },
+          {
+            "nombre": "Hidroéctrica",
+            "SubTipos": []
+          },
+          {
+            "nombre": "Eléctricidad",
+            "SubTipos": []
+          }
+        ]
+      },
+      {
+        "nombre": "Alcance 1",
+        "meta": 20,
+        "Tipos": [
+          {
+            "nombre": "Gases Refrigerantes",
+            "SubTipos": [
+              {
+                "nombre": "CFC-11 (CCl3F)",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "CFC-11 : CCl3F",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 10
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 10
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "CFC-113 : CCl2FCClF2",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 11
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 11
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Bromuro de Metilo (CH3Br)",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Bromuro de Metilo  : CH3Br",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 9
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 9
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Emisiones Fugitivas",
+            "SubTipos": [
+              {
+                "nombre": "Aguas Residuales Industriales",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Vertimiento industriales tratados 1: PTAR aeróbica sobrecargada",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 7
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 7
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Vertimiento industriales tratados 2: Digestor o reactor anaérobico",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 8
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 8
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Aguas Residuales Domesticas",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Vertimientos domésticos a cloaca o alcantarilla",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 5
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 5
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Vertimientos domésticos tratados 1 (PTAR aeróbica sobrecargada)",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 6
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 6
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Combustibles",
+            "SubTipos": [
+              {
+                "nombre": "Biodiesel",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Biosiesel palma",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 3
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 3
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Combustóleo",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 4
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 4
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Carbón",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Carbón",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 1
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Bagazo",
+                    "RegistroMes": [
+                      {
+                        "value": 12,
+                        "mes": "enero",
+                        "SubTipoInferiorId": 2
+                      },
+                      {
+                        "value": 24,
+                        "mes": "diciembre",
+                        "SubTipoInferiorId": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "empresa": "Nombre de la empresa 2",
+    "planta": "Nombre de la planta 2",
+    "ubicacion": "Ubicacion 2",
+    "año": "2022",
+    "Alcances": [
+      {
+        "nombre": "Alcance 3",
+        "meta": 30,
+        "Tipos": [
+          {
+            "nombre": "Residuos",
+            "SubTipos": [
+              {
+                "nombre": "Relleno Sanitario gestionado anaeróbico",
+                "SubTipoInferiors": []
+              },
+              {
+                "nombre": "Quema a cielo abierto controlada rural",
+                "SubTipoInferiors": []
+              },
+              {
+                "nombre": "Incineración",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Lodos residuos líquidos domésticos",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 33
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 33
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Lodos residuos líquidos industriales",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 34
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 34
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Actividad Agropecuaria",
+            "SubTipos": [
+              {
+                "nombre": "Alimentos (Kg)",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Carne res",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 31
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 31
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Carne cerdo",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 32
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 32
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Transporte (Km)",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Bus local",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 29
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 29
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Taxi",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 30
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 30
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Alcance 2",
+        "meta": 30,
+        "Tipos": [
+          {
+            "nombre": "Solar",
+            "SubTipos": []
+          },
+          {
+            "nombre": "Hidroéctrica",
+            "SubTipos": []
+          },
+          {
+            "nombre": "Eléctricidad",
+            "SubTipos": []
+          }
+        ]
+      },
+      {
+        "nombre": "Alcance 1",
+        "meta": 30,
+        "Tipos": [
+          {
+            "nombre": "Gases Refrigerantes",
+            "SubTipos": [
+              {
+                "nombre": "CFC-11 (CCl3F)",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "CFC-11 : CCl3F",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 27
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 27
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "CFC-113 : CCl2FCClF2",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 28
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 28
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Bromuro de Metilo (CH3Br)",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Bromuro de Metilo  : CH3Br",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 26
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 26
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Emisiones Fugitivas",
+            "SubTipos": [
+              {
+                "nombre": "Aguas Residuales Industriales",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Vertimiento industriales tratados 1: PTAR aeróbica sobrecargada",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 24
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 24
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Vertimiento industriales tratados 2: Digestor o reactor anaérobico",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 25
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 25
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Aguas Residuales Domesticas",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Vertimientos domésticos a cloaca o alcantarilla",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 22
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 22
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Vertimientos domésticos tratados 1 (PTAR aeróbica sobrecargada)",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 23
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 23
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Combustibles",
+            "SubTipos": [
+              {
+                "nombre": "Biodiesel",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Biosiesel palma",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 20
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 20
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Combustóleo",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 21
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 21
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Carbón",
+                "SubTipoInferiors": [
+                  {
+                    "nombre": "Carbón",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 18
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 18
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Bagazo",
+                    "RegistroMes": [
+                      {
+                        "value": 22,
+                        "mes": "febrero",
+                        "SubTipoInferiorId": 19
+                      },
+                      {
+                        "value": 34,
+                        "mes": "noviembre",
+                        "SubTipoInferiorId": 19
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
