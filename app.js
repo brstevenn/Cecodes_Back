@@ -13,9 +13,9 @@ const mysqlDataRoutes = require('./src/routes/mysqlDataRoutes')
 
 var cors = require('cors');
 const sequelize = require('./src/config/dbMysql')
-var conectarDB = require('./src/config/db');
+// var conectarDB = require('./src/config/db');
 
-conectarDB();
+// conectarDB();
 sequelize;
 
 app.use(logger('dev'));
