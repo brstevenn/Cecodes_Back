@@ -1,8 +1,8 @@
 const sequelize = require('../config/dbMysql');
-const { Main, Scope, Type, SubType, SubTypeInferior, Month, MonthLog } = require('../models/relations');
+const { Op } = require('sequelize')
+const { Main, Scope, Type, SubType, SubTypeInferior, Month, TypeValue } = require('../models/relations');
 const SubTypeInferiorValue = require('../models/subTypeInferiorValue');
 const SubTypeValue = require('../models/subTypeValue');
-const TypeValue = require('../models/typeValue');
 
 
 const createTables = async (req, res) => {
@@ -30,174 +30,375 @@ const createTables = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
+    let main = []
     await sequelize.transaction(async (t) => {
-      await Main.findAll({
-        attributes: {
-          exclude: ['createdAt', 'updatedAt'] // Excluir los campos de fecha de creación y actualización
-        },
+
+
+      const main2 = await Main.findAll({
         include: [
           {
             model: Scope,
-            attributes: {
-              exclude: ['createdAt', 'updatedAt', 'id', 'PrincipalId'] // Excluir los campos de fecha de creación y actualización
-            },
             include: [
               {
                 model: Type,
-                attributes: {
-                  exclude: ['createdAt', 'updatedAt', 'id', 'AlcanceId'] // Excluir los campos de fecha de creación y actualización
-                },
                 include: [
                   {
                     model: SubType,
-                    attributes: {
-                      exclude: ['createdAt', 'updatedAt', 'id', "TipoId"] // Excluir los campos de fecha de creación y actualización
-                    },
+                    required: true,
                     include: [
                       {
                         model: SubTypeInferior,
-                        attributes: {
-                          exclude: ['createdAt', 'updatedAt', 'id', "SubTipoId"] // Excluir los campos de fecha de creación y actualización
-                        },
+                        required: true,
                         include: [
                           {
-                            model: MonthLog,
-                            attributes: {
-                              exclude: ['createdAt', 'updatedAt', 'id', "SubTipoId", "PrincipalId", "AlcanceId", "TipoId"]
-                            }
+                            model: SubTypeInferiorValue,
+                            required: true,
+                            attributes: { exclude: ["subTipoInferiorId", "valorSubTipoInferiorId"] }
                           }
-                        ]
+                        ],
+                        attributes: { exclude: ["subTipoInferiorId", "subTipoId"] }
+                      },
+                      {
+                        model: SubTypeValue,
+                        attributes: { exclude: ["subTipoId", "valorSubTipoId"] }
                       }
-                    ]
+                    ],
+                    attributes: { exclude: ["tipoId", "subTipoId"] }
+                  },
+                  {
+                    model: TypeValue,
+                    attributes: { exclude: ["tipoId", "valorTipoId"] }
                   }
-                ]
+                ],
+                attributes: { exclude: ["tipoId", "alcanceId"] }
               }
-            ]
+            ],
+            attributes: { exclude: ["principalId", "alcanceId"] }
           }
-        ]
+        ],
+        attributes: { exclude: ["principalId"] }
       });
+
+      console.log(main2)
+      main = main2
     })
-    res.status(200).json({ message: 'Datos agregados correctamente' });
+
+    /*
+    function convertKeysToLower(obj) {
+      if (typeof obj !== 'object' || obj === null) {
+        return obj;
+      }
+    
+      if (Array.isArray(obj)) {
+        return obj.map(item => convertKeysToLower(item));
+      }
+    
+      const newObj = {};
+      for (const key in obj) {
+        if (Object.hasOwnProperty.call(obj, key)) {
+          const newKey = key.toLowerCase();
+          newObj[newKey] = convertKeysToLower(obj[key]);
+        }
+      }
+      return newObj;
+    }
+    */
+
+    const data = {
+      "empresa": "Nombre de la empresa 2",
+      "planta": "Nombre de la planta 2",
+      "ubicacion": "Ubicacion 2",
+      "año": "2022",
+      "alcances": [
+        {
+          "nombre": "Alcance 1",
+          "meta": 30,
+          "tipos": [
+            {
+              "nombre": "Combustibles",
+              "meses": null,
+              "subTipos": [
+                {
+                  "nombre": "Carbón",
+                  "meses": null,
+                  "subTipoInferior": [
+                    {
+                      "nombre": "Carbón",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    },
+                    {
+                      "nombre": "Bagazo",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    }
+                  ]
+                },
+                {
+                  "nombre": "Biodiesel",
+                  "meses": null,
+                  "subTipoInferior": [
+                    {
+                      "nombre": "Biosiesel palma",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    },
+                    {
+                      "nombre": "Combustóleo",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "nombre": "Emisiones Fugitivas",
+              "meses": null,
+              "subTipos": [
+                {
+                  "nombre": "Aguas Residuales Domesticas",
+                  "meses": null,
+                  "subTipoInferior": [
+                    {
+                      "nombre": "Vertimientos domésticos a cloaca o alcantarilla",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    },
+                    {
+                      "nombre": "Vertimientos domésticos tratados 1 (PTAR aeróbica sobrecargada)",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    }
+                  ]
+                },
+                {
+                  "nombre": "Aguas Residuales Industriales",
+                  "meses": null,
+                  "subTipoInferior": [
+                    {
+                      "nombre": "Vertimiento industriales tratados 1: PTAR aeróbica sobrecargada",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    },
+                    {
+                      "nombre": "Vertimiento industriales tratados 2: Digestor o reactor anaérobico",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "nombre": "Gases Refrigerantes",
+              "meses": null,
+              "subTipos": [
+                {
+                  "nombre": "Bromuro de Metilo (CH3Br)",
+                  "meses": null,
+                  "subTipoInferior": [
+                    {
+                      "nombre": "Bromuro de Metilo  : CH3Br",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    }
+                  ]
+                },
+                {
+                  "nombre": "CFC-11 (CCl3F)",
+                  "meses": null,
+                  "subTipoInferior": [
+                    {
+                      "nombre": "CFC-11 : CCl3F",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    },
+                    {
+                      "nombre": "CFC-113 : CCl2FCClF2",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "nombre": "Alcance 2",
+          "meta": 30,
+          "tipos": [
+            {
+              "nombre": "Eléctricidad",
+              "meses": {
+                "febrero": 22,
+                "noviembre": 34
+              },
+              "subTipos": null
+            },
+            {
+              "nombre": "Hidroéctrica",
+              "meses": {
+                "febrero": 22,
+                "noviembre": 34
+              },
+              "subTipos": null
+            },
+            {
+              "nombre": "Solar",
+              "meses": {
+                "febrero": 22,
+                "noviembre": 34
+              },
+              "subTipos": null
+            }
+          ]
+        },
+        {
+          "nombre": "Alcance 3",
+          "meta": 30,
+          "tipos": [
+            {
+              "nombre": "Actividad Agropecuaria",
+              "meses": null,
+              "subTipos": [
+                {
+                  "nombre": "Transporte (Km)",
+                  "meses": null,
+                  "subTipoInferior": [
+                    {
+                      "nombre": "Bus local",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    },
+                    {
+                      "nombre": "Taxi",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    }
+                  ]
+                },
+                {
+                  "nombre": "Alimentos (Kg)",
+                  "meses": null,
+                  "subTipoInferior": [
+                    {
+                      "nombre": "Carne res",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    },
+                    {
+                      "nombre": "Carne cerdo",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "nombre": "Residuos",
+              "meses": null,
+              "subTipos": [
+                {
+                  "nombre": "Incineración",
+                  "meses": null,
+                  "subTipoInferior": [
+                    {
+                      "nombre": "Lodos residuos líquidos domésticos",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    },
+                    {
+                      "nombre": "Lodos residuos líquidos industriales",
+                      "meses": {
+                        "febrero": 22,
+                        "noviembre": 34
+                      }
+                    }
+                  ]
+                },
+                {
+                  "nombre": "Quema a cielo abierto controlada rural",
+                  "meses": {
+                    "febrero": 22,
+                    "noviembre": 34
+                  }
+                },
+                {
+                  "nombre": "Relleno Sanitario gestionado anaeróbico",
+                  "meses": {
+                    "febrero": 22,
+                    "noviembre": 34
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+    const flattenJSON = (data, parentPath = '') => {
+      let flattenedData = [];
+
+      for (const key in data) {
+        if (typeof data[key] === 'object' && !Array.isArray(data[key])) {
+          flattenedData.push(...flattenJSON(data[key], parentPath + key + '::'));
+        } else {
+          flattenedData.push({
+            key: parentPath + key,
+            value: data[key]
+          });
+        }
+      }
+
+      return flattenedData;
+    };
+
+    const transformedData = flattenJSON(data);
+
+    console.log(transformedData);
+
+    res.status(200).json(main)
+    // res.status(200).json(transformedData);
   } catch (error) {
     console.error('Error al obtener los datos:', error);
     res.status(500).json({ error: 'Error al obtener los datos' });
   }
 };
-
-/*
-const newData = async (req, res) => {
-  const addDataRecursively = async (data, parentIds = {}) => {
-    try {
-      // Crear registro en la tabla Main
-      const main = await Main.create({
-        empresa: data.empresa,
-        planta: data.planta,
-        ubicacion: data.ubicacion,
-        año: data.año,
-      });
-
-      const setMonth = async (dataKey, dataId, monthName, monthValue) => {
-        try {
-          await MonthLog.create({
-            value: monthValue,
-            mes: monthName,
-            [dataKey]: dataId
-          }, { ignoreDuplicates: true });
-        } catch (error) {
-          console.error('Error al agregar los datos:', error);
-          throw error;
-        }
-      };
-
-      // Recorrer los alcances
-      for (const scope of data.alcances) {
-        // Crear registro en la tabla Scope
-        const scopeRecord = await Scope.create({
-          nombre: scope.nombre,
-          meta: scope.meta,
-          ...parentIds,
-        });
-
-        if (scope.tipos) {
-          for (const type of scope.tipos) {
-            // Crear registro en la tabla Type
-            const typeRecord = await Type.create({
-              nombre: type.nombre,
-              ...parentIds,
-            });
-
-            if (type.meses) {
-              for (const month in type.meses) {
-                const monthNameType = month;
-                const monthValueType = type.meses[monthNameType];
-
-                const [monthRecord] = await Month.findOrCreate({
-                  where: { nombre: monthNameType },
-                  defaults: { nombre: monthNameType }
-                });
-
-                await setMonth("tipoId", typeRecord.tipoId, monthNameType, monthValueType);
-              }
-            }
-
-            if (type.subTipos) {
-              for (const subType of type.subTipos) {
-                // Crear registro en la tabla SubType
-                const subTypeRecord = await SubType.create({
-                  nombre: subType.nombre,
-                  ...parentIds,
-                });
-
-                if (subType.meses) {
-                  for (const month in subType.meses) {
-                    const monthNameSubType = month;
-                    const monthValueSubType = subType.meses[monthNameSubType];
-
-                    const monthRecord = await Month.findOne({
-                      where: { nombre: monthNameSubType },
-                    });
-
-                    await setMonth("subTipoId", subTypeRecord.subTipoId, monthNameSubType, monthValueSubType);
-                  }
-                }
-
-                if (subType.subTipoInferior) {
-                  for (const subTypeInferior of subType.subTipoInferior) {
-                    // Crear registro en la tabla SubTypeInferior
-                    const subTypeInferiorRecord = await SubTypeInferior.create({
-                      nombre: subTypeInferior.nombre,
-                      ...parentIds,
-                    });
-
-                    if (subTypeInferior.meses) {
-                      for (const month in subTypeInferior.meses) {
-                        await setMonth("subTipoInferiorId", subTypeInferiorRecord.subTipoInferiorId, month, subTypeInferior.meses[month]);
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Error al agregar los datos:', error);
-      throw error;
-    }
-  };
-
-  const data = req.body;
-  addDataRecursively(data)
-    .then(() => {
-      console.log('Datos agregados correctamente');
-    })
-    .catch((error) => {
-      console.error('Error al agregar los datos:', error);
-    });
-}
-*/
-
 
 const newData = async (req, res) => {
   try {
@@ -211,21 +412,8 @@ const newData = async (req, res) => {
         año: data.año,
       });
 
-      const setMonth = async (dataKey, dataId, monthName, monthValue) => {
-        try {
-          await MonthLog.create({
-            value: monthValue,
-            mes: monthName,
-            [dataKey]: dataId
-          }, { ignoreDuplicates: true });
 
-        } catch (error) {
-          console.error('Error al agregar los datos:', error);
-          throw error;
-        }
-      };
-
-      if(data.alcances && main.principalId) {
+      if (data.alcances && main.principalId) {
         for (const scope of data.alcances) {
 
           const scopeRecord = await Scope.create({
@@ -233,23 +421,21 @@ const newData = async (req, res) => {
             meta: scope.meta,
             principalId: main.principalId,
           });
-  
+
           if (scope.tipos && scopeRecord.alcanceId) {
-  
+
             for (const type of scope.tipos) {
 
-
-  
               const typeRecord = await Type.create({
                 nombre: type.nombre,
                 alcanceId: scopeRecord.alcanceId,
               });
-  
+
               if (type.meses) {
                 for (const month in type.meses) {
                   const monthNameType = month;
                   const monthValueType = type.meses[monthNameType];
-  
+
                   const [monthRecord, created] = await Month.findOrCreate({
                     where: { nombre: monthNameType },
                     defaults: { nombre: monthNameType }
@@ -260,11 +446,9 @@ const newData = async (req, res) => {
                     valor: monthValueType,
                     tipoId: typeRecord.tipoId
                   })
-  
-                  // await setMonth("tipoId", typeRecord.tipoId, monthNameType, monthValueType);
                 }
               }
-  
+
               if (type.subTipos && typeRecord.tipoId) {
                 for (const subType of type.subTipos) {
 
@@ -272,13 +456,13 @@ const newData = async (req, res) => {
                     nombre: subType.nombre,
                     tipoId: typeRecord.tipoId,
                   });
-  
+
                   if (subType.meses) {
                     for (const month in subType.meses) {
-  
+
                       const monthNameSubType = month
                       const monthValueSubType = subType.meses[monthNameSubType]
-  
+
                       const monthRecord = await Month.findOne({
                         where: { nombre: monthNameSubType },
                       });
@@ -288,20 +472,16 @@ const newData = async (req, res) => {
                         valor: monthValueSubType,
                         subTipoId: subTypeRecord.subTipoId
                       })
-  
-                      //if (monthRecord) {
-                      // await setMonth("subTipoId", subTypeRecord.subTipoId, monthNameSubType, monthValueSubType)
-                      //}
                     }
                   }
-  
-                  if (subType.subTipoInferior  && subTypeRecord.subTipoId) {
+
+                  if (subType.subTipoInferior && subTypeRecord.subTipoId) {
                     for (const subTypeInferior of subType.subTipoInferior) {
                       const subTypeInferiorRecord = await SubTypeInferior.create({
                         nombre: subTypeInferior.nombre,
                         subTipoId: subTypeRecord.subTipoId,
                       });
-  
+
                       if (subTypeInferior.meses) {
                         for (const month in subTypeInferior.meses) {
 
@@ -313,7 +493,6 @@ const newData = async (req, res) => {
                             valor: monthValueSubTypeInferior,
                             subTipoInferiorId: subTypeInferiorRecord.subTipoInferiorId
                           })
-                          // await setMonth("subTipoInferiorId", subTypeInferiorRecord.subTipoInferiorId, month, subTypeInferior.meses[month])
                         }
                       }
                     }
@@ -330,123 +509,6 @@ const newData = async (req, res) => {
     console.error('Error al obtener los datos:', error);
     res.status(500).json({ error: 'Error al obtener los datos' });
   }
-  /*
-    try {
-  
-  
-  
-      const main = await Main.create({
-        empresa: data.empresa,
-        planta: data.planta,
-        ubicacion: data.ubicacion,
-        año: data.año,
-      });
-  
-      const setMonth = async (dataKey, dataId, monthName, monthValue) => {
-        try {
-          await MonthLog.create({
-            value: monthValue,
-            mes: monthName,
-            [dataKey]: dataId
-          }, { ignoreDuplicates: true });
-  
-        } catch (error) {
-          console.error('Error al agregar los datos:', error);
-          throw error;
-        }
-      };
-  
-      for (const scope of data.alcances) {
-  
-        const scopeRecord = await Scope.create({
-          nombre: scope.nombre,
-          meta: scope.meta,
-          principalId: main.principalId,
-        });
-  
-        if (scope.tipos && scopeRecord.alcanceId) {
-  
-          for (const type of scope.tipos) {
-  
-            const typeRecord = await Type.create({
-              nombre: type.nombre,
-              alcanceId: scopeRecord.alcanceId,
-            });
-            if (type.meses) {
-              for (const month in type.meses) {
-                const monthNameType = month;
-                const monthValueType = type.meses[monthNameType];
-  
-                const [monthRecord, created] = await Month.findOrCreate({
-                  where: { nombre: monthNameType },
-                  defaults: { nombre: monthNameType }
-                });
-  
-                await setMonth("tipoId", typeRecord.tipoId, monthNameType, monthValueType);
-              }
-            }
-  
-            if (type.subTipos && typeRecord.subTipoId) {
-              for (const subType of type.subTipos) {
-  
-                console.log("===================Pasando typeRecord=====================")
-                console.log(typeRecord.tipoId)
-                console.log("========================================================")
-  
-                const subTypeRecord = await SubType.create({
-                  nombre: subType.nombre,
-                  tipoId: typeRecord.tipoId,
-                });
-  
-                if (subType.meses) {
-                  for (const month in subType.meses) {
-  
-                    const monthNameSubType = month
-                    const monthValueSubType = subType.meses[monthNameSubType]
-  
-                    const monthRecord = await Month.findOne({
-                      where: { nombre: monthNameSubType },
-                    });
-  
-                    //if (monthRecord) {
-                      await setMonth("subTipoId", subTypeRecord.subTipoId, monthNameSubType, monthValueSubType)
-                    //}
-                  }
-                }
-  
-                console.log("===================Pasando subtype=====================")
-                console.log(subTypeRecord.subTipoId)
-                console.log("========================================================")
-  
-                if (subType.subTipoInferior) {
-                  for (const subTypeInferior of subType.subTipoInferior) {
-                    const subTypeInferiorRecord = await SubTypeInferior.create({
-                      nombre: subTypeInferior.nombre,
-                      subTipoId: subTypeRecord.subTipoId,
-                    });
-  
-                    console.log("===============Pasando subtypeinferior==================")
-                    console.log(subTypeInferiorRecord.subTipoId)
-                    console.log("========================================================")
-  
-                    if (subTypeInferior.meses) {
-                      for (const month in subTypeInferior.meses) {
-                        await setMonth("subTipoInferiorId", subTypeInferiorRecord.subTipoInferiorId, month, subTypeInferior.meses[month])
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      res.status(200).json({ message: 'Datos agregados correctamente' });
-    } catch (error) {
-      console.error('Error al agregar los datos:', error);
-      res.status(500).json({ error: 'Error al agregar los datos' });
-    }
-    */
 };
 
 

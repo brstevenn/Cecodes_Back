@@ -10,14 +10,6 @@ const SubType = sequelize.define('SubTipo', {
   nombre: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-  month: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  value: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
   }
 });
 

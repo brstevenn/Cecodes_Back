@@ -4,7 +4,6 @@ const SubTypeInferior = require('./subTypeInferior');
 const Type = require('./type');
 const SubType = require('./subType');
 const Month = require('./month');
-const MonthLog = require('./monthLog');
 const TypeValue = require('./typeValue');
 const SubTypeValue = require('./subTypeValue');
 const SubTypeInferiorValue = require('./subTypeInferiorValue');
@@ -44,9 +43,11 @@ SubTypeInferior.hasMany(SubTypeInferiorValue, {
 module.exports = {
   Main,
   Scope,
-  SubTypeInferior,
   Type,
+  TypeValue,
   SubType,
+  SubTypeValue,
+  SubTypeInferior,
+  SubTypeInferiorValue,
   Month,
-  MonthLog,
 };
