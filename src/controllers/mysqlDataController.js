@@ -44,7 +44,6 @@ const getAll = async (req, res) => {
                 include: [
                   {
                     model: SubType,
-                    required: true,
                     include: [
                       {
                         model: SubTypeInferior,
@@ -388,11 +387,55 @@ const getAll = async (req, res) => {
       return flattenedData;
     };
 
-    const transformedData = flattenJSON(data);
+    const transformedData = main.map(item => {
+      const transformedItem = {
+        id: item.principalId,
+        empresa: item.empresa,
+        planta: item.planta,
+        ubicacion: item.ubicacion,
+        año: item.año
+      };
+
+      item.Alcances.forEach(alcance => {
+        transformedItem[`${alcance.nombre}`] = {};
+        transformedItem[`${alcance.nombre}`].meta = alcance.meta
+        alcance.Tipos.forEach(tipo => {
+          const tipoObj = {};
+          tipo.SubTipos.forEach(subTipo => {
+            const subTipoObj = {};
+            subTipo.SubTipoInferiors.forEach(subTipoInferior => {
+              const subTipoInferiorObj = {};
+              subTipoInferior.ValorSubTipoInferiors.forEach(valor => {
+                subTipoInferiorObj[valor.mes] = valor.valor;
+              });
+              subTipoObj[subTipoInferior.nombre] = subTipoInferiorObj;
+            });
+            tipoObj[subTipo.nombre] = subTipoObj;
+            if(subTipo.ValorSubTipos) {
+              subTipo.ValorSubTipos.forEach(valor => {
+                subTipoObj[valor.mes] = valor.valor;
+              });
+            }
+          });
+          if(tipo.ValorTipos) {
+            tipo.ValorTipos.forEach(valor => {
+              tipoObj[valor.mes] = valor.valor;
+            });
+          }
+          transformedItem[`${alcance.nombre}`][tipo.nombre] = tipoObj;
+        });
+      });
+
+      return transformedItem;
+    });
+
 
     console.log(transformedData);
 
-    res.status(200).json(main)
+    console.log("==========================================================================")
+    console.log(flattenJSON(data))
+
+    res.status(200).json(transformedData)
     // res.status(200).json(transformedData);
   } catch (error) {
     console.error('Error al obtener los datos:', error);
