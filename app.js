@@ -7,7 +7,6 @@ var logger = require('morgan');
 
 var app = express();
 
-var dataRoutes = require('./src/routes/dataRoutes');
 const mysqlDataRoutes = require('./src/routes/mysqlDataRoutes')
 
 var cors = require('cors');
@@ -32,7 +31,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/data', dataRoutes);
 app.use('/api/data', mysqlDataRoutes);
 
 app.use(function (req, res, next) {

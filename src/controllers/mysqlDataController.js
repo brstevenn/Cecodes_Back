@@ -81,11 +81,12 @@ const newData = async (req, res) => {
 
       if (data.alcances && main.principalId) {
         for (const scope of data.alcances) {
-
-          console.log(scope.meta)
+          console.log("=============================================================")
+          console.log(scope.meta > 0 ? scope.meta : 0)
+          console.log("=============================================================")
           const scopeRecord = await Scope.create({
             nombre: scope.nombre,
-            meta: scope.meta ? scope.meta : 0,
+            meta: scope.meta > 0 ? scope.meta : 0,
             principalId: main.principalId,
           });
 
