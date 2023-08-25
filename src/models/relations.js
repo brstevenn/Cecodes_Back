@@ -12,8 +12,8 @@ Main.hasMany(Values, {
 });
 
 Values.belongsTo(Month, {
-  foreignKey: 'mesId', // Debe coincidir con el nombre de la columna en Values
-  as: 'Month', // Puedes usar cualquier alias que desees
+  foreignKey: 'mesId',
+  as: 'Month',
 });
 
 module.exports = {
